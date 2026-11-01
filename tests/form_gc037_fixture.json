@@ -1,0 +1,135 @@
+{
+  "experiment": {
+    "schema_version": "chemcritic.experiment.v0.2",
+    "experiment_id": "FORM-V2-GC037",
+    "simulated": true,
+    "reaction": {
+      "type": "suzuki_miyaura",
+      "type_label": null,
+      "reactants": [
+        {
+          "name": "bromobenzene",
+          "role": "aryl_halide",
+          "equivalents": 1,
+          "limiting": true,
+          "role_source": "user_stated"
+        },
+        {
+          "name": "phenylboronic acid",
+          "role": "boronic_acid_or_ester",
+          "equivalents": 1.2,
+          "limiting": false,
+          "role_source": "user_stated"
+        }
+      ],
+      "product": {
+        "name": "biphenyl"
+      },
+      "equivalents_basis": {
+        "reactant_index": 0,
+        "label": "bromobenzene"
+      }
+    },
+    "catalyst": {
+      "name": "Pd(PPh3)4",
+      "loading_mol_pct": 1,
+      "loading_basis": "相对溴苯",
+      "ligand": {
+        "name": null,
+        "loading_mol_pct": null
+      }
+    },
+    "additives": [
+      {
+        "name": "K2CO3",
+        "type": "base",
+        "equivalents": 2,
+        "loading_mol_pct": null
+      }
+    ],
+    "additives_listed_complete": null,
+    "additive_declarations": {},
+    "conditions": {
+      "solvent_system": {
+        "primary": "乙醇",
+        "cosolvent": "水",
+        "ratio": "4:1（体积比）",
+        "volume_ml": null,
+        "water_content": "aqueous"
+      },
+      "temperature_C": 70,
+      "time_h": 4,
+      "atmosphere": null,
+      "scale_mmol": 1,
+      "pressure_bar": null,
+      "irradiation": null,
+      "addition_mode": null
+    },
+    "results": {
+      "value_pct": 37,
+      "metric": "gc",
+      "basis": "溴苯投料量",
+      "method": "GC-FID",
+      "internal_standard": null,
+      "characterization": [],
+      "repeat_attempts": null,
+      "replicates": []
+    },
+    "user_goal": {
+      "minimum_yield_pct": 60,
+      "metric": "isolated"
+    }
+  },
+  "engine_subject": {
+    "record_id": "FORM-V2-GC037",
+    "inputs_source": {
+      "substrate.aryl_halide": "user_stated",
+      "substrate.boronic_acid": "user_stated",
+      "substrate.product": "user_stated",
+      "outcome.value": "user_stated",
+      "outcome.outcome_type": "user_stated",
+      "conditions.catalyst": "user_stated",
+      "conditions.catalyst_mol_pct": "user_stated",
+      "conditions.base": "user_stated",
+      "conditions.base_eq": "user_stated",
+      "conditions.solvent": "user_stated",
+      "conditions.temp_c": "user_stated",
+      "conditions.time_h": "user_stated",
+      "conditions.scale_mmol": "user_stated",
+      "conditions.atmosphere": "unknown",
+      "equivalents.aryl_halide": "user_stated",
+      "equivalents.boronic_acid": "user_stated"
+    },
+    "substrate": {
+      "aryl_halide": "bromobenzene",
+      "boronic_acid": "phenylboronic acid",
+      "product": "biphenyl"
+    },
+    "outcome": {
+      "value": 37,
+      "outcome_type": "gc",
+      "label_raw": "用户表单口径字段: metric=gc, method=GC-FID, value_pct=37.0"
+    },
+    "conditions": {
+      "catalyst": "Pd(PPh3)4",
+      "catalyst_mol_pct": 1,
+      "ligand": null,
+      "base": "K2CO3",
+      "base_eq": 2,
+      "solvent": "ethanol/water 4:1",
+      "temp_c": 70,
+      "time_h": 4,
+      "atmosphere": null,
+      "scale_mmol": 1,
+      "equivalents": {
+        "aryl_halide": 1,
+        "boronic_acid": 1.2
+      }
+    },
+    "assay": {
+      "method": "GC-FID",
+      "internal_standard": null,
+      "quantification_basis": "溴苯投料量"
+    }
+  }
+}

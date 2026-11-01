@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ChemCritic · 实验复盘</title>
+  <link rel="stylesheet" href="/style.css"><script src="/app.js" defer></script>
+</head>
+<body>
+<header class="masthead"><div class="brand"><span class="brand-mark" aria-hidden="true">Cc</span><div><strong>ChemCritic</strong><span>实验有据，复盘有序</span></div></div><span class="local-tag">实验评估工作台</span></header>
+<main>
+  <section class="intro"><p class="eyebrow">通用实验记录 / 按角色录入</p><h1>这次实验表现如何，<br>下一步怎么改进。</h1><p>提交实验记录，由团队Agent结合文献给出评估与后续方案。当前判定引擎覆盖 Suzuki–Miyaura，其他反应仍可做事实复盘与证据核查。</p></section>
+  <div id="message" class="message" role="status" hidden></div>
+  <div class="workspace">
+    <section class="panel input-panel" aria-labelledby="input-title">
+      <div class="section-heading"><div><span class="step">01 / 输入</span><h2 id="input-title">实验记录</h2></div><button type="button" id="load-example" class="button secondary">载入示例</button></div>
+      <p class="hint">逐项填写实验记录，由团队Agent按团队规则执行判定并提出下一轮方案。未知项留空，无需先整理JSON或上传先例。</p>
+      <label>输入方式<select id="agent-input-mode"><option value="form">逐项填写实验记录</option><option value="text">直接描述实验</option></select></label>
+      <div id="agent-text-input" hidden>
+      <label for="agent-description">实验描述与研究需求</label>
+      <textarea id="agent-description" rows="12" maxlength="20000" placeholder="例如：模拟案例。4-溴苯甲醚与苯硼酸反应，Pd(PPh3)4，THF，60°C，12h，分离收率42%，希望达到60%。自述1H NMR匹配，尚未上传谱图；碱和催化剂载量未记录。请按团队规则判定并提出下一轮方案。"></textarea>
+      <button type="button" id="agent-example" class="button secondary">填入模拟体验案例</button>
+      </div>
+      <p class="hint">填写后点击右侧“评估并生成下一轮方案”。Agent只接收当前选择的输入方式；每次提交会使用账户额度。</p>
+      <div id="agent-form-input">
+      <form id="experiment-form">
+        <div class="fields two"><label>实验编号（可自定）<input name="experiment_id" required></label><label>数据属性<select name="simulated" required><option value="true">模拟案例</option><option value="false">真实实验记录</option></select></label></div>
+        <p class="hint">实验编号用于区分记录；未知信息留空，不需要为运行而补填。</p>
+
+        <fieldset><legend>反应与反应物</legend>
+          <label>反应类型<select name="reaction_type" id="reaction-type"></select></label>
+          <label id="reaction-type-other-wrap" hidden>具体类型<input name="reaction_type_label" placeholder="如 Mannich、Tishchenko、光催化脱羧"></label>
+          <p class="hint">角色由你声明，系统不会根据化学名称推断。选错角色会直接改变能否进入判定；反应确实不属于 Suzuki–Miyaura 时，请如实选择“其他”。</p>
+          <div class="table-wrap"><table class="entry-table">
+            <thead><tr><th>反应物</th><th>角色</th><th>当量</th><th>限量试剂（当量基准）</th><th></th></tr></thead>
+            <tbody id="reactant-rows"></tbody>
+          </table></div>
+          <button type="button" id="add-reactant" class="button secondary">＋ 添加反应物</button>
+          <label>目标产物<input name="product_name" required></label>
+          <p class="hint">“限量试剂”同时是当量计算基准；未勾选时当量基准保持未知，系统不自动假设 1.0 当量。</p>
+        </fieldset>
+
+        <fieldset><legend>催化剂与配体</legend>
+          <div class="fields two"><label>催化剂<input name="catalyst" placeholder="未知可留空"></label><label>载量（mol%）<input name="catalyst_loading_mol_pct" type="number" min="0" step="any"></label></div>
+          <label>催化剂载量计算基准<input name="catalyst_loading_basis" placeholder="相对哪个投料"></label>
+          <div class="fields two"><label>另加配体<input name="ligand" placeholder="未加请留空并注明"></label><label>配体载量（mol%）<input name="ligand_loading_mol_pct" type="number" min="0" step="any"></label></div>
+        </fieldset>
+
+        <fieldset><legend>催化体系分类（可选，用于档内定位）</legend>
+          <p class="hint">这五项由你声明，系统不会根据催化剂名称推断。五项都填写后，固定引擎才能把结果与同档参照并排定位；任一项留空则保持“档位无法判定”。</p>
+          <div class="fields three" id="classification-fields"></div>
+        </fieldset>
+
+        <fieldset><legend>添加剂（碱 / 酸 / 盐 / 氧化剂 / 还原剂 / 助催化剂…）</legend>
+          <p class="hint">不再只有“碱”一个入口：任何加入的试剂都可以按类型登记。用量填当量或 mol% 之一；都没填就按未知处理。</p>
+          <div class="table-wrap"><table class="entry-table">
+            <thead><tr><th>名称</th><th>类型</th><th>当量</th><th>mol%</th><th></th></tr></thead>
+            <tbody id="additive-rows"></tbody>
+          </table></div>
+          <button type="button" id="add-additive" class="button secondary">＋ 添加添加剂</button>
+          <label class="check"><input name="additives_complete" type="checkbox">以上已完整列出（未列出即视为未加入；不勾选表示未知）</label>
+        </fieldset>
+
+        <fieldset><legend>溶剂与条件</legend>
+          <div class="fields three"><label>主溶剂<input name="solvent_primary"></label><label>共溶剂<input name="solvent_cosolvent"></label><label>比例<input name="solvent_ratio" placeholder="如 4:1"></label></div>
+          <div class="fields three"><label>溶剂体积（mL）<input name="solvent_volume_ml" type="number" min="0.000001" step="any"></label><label>溶剂含水性<select name="water_content"><option value="unknown">未知 / 未记录</option><option value="anhydrous">明确无水</option><option value="aqueous">明确含水</option></select></label><label>气氛<input name="atmosphere" placeholder="如空气、N2；未知留空"></label></div>
+          <div class="fields three"><label>温度（°C）<input name="temperature_C" type="number" min="-273.15" step="any"></label><label>时间（h）<input name="time_h" type="number" min="0.000001" step="any"></label><label>规模（mmol）<input name="scale_mmol" type="number" min="0.000001" step="any"></label></div>
+          <details><summary>压力、光照、加料方式</summary><div class="fields three"><label>压力（bar）<input name="pressure_bar" type="number" min="0" step="any"></label><label>光照 / 辐照<input name="irradiation" placeholder="如 45 W blue LED"></label><label>加料方式<input name="addition_mode" placeholder="如一锅、滴加"></label></div></details>
+        </fieldset>
+
+        <fieldset><legend>结果与产物证据</legend>
+          <div class="fields two"><label>实测结果（%）<input name="value_pct" type="number" min="0" max="100" step="any"></label><label>结果口径<select name="metric" class="assay-options"></select></label></div>
+          <div class="fields two"><label>结果计算基准<input name="basis" placeholder="如 4-bromoanisole 投料量"></label><label>定量方法<input name="results_method" placeholder="如 分离称重、GC-FID"></label></div>
+          <label>内标<input name="internal_standard" placeholder="未提供请留空"></label>
+          <p class="hint">结构证据全部由你填写，系统不会读取谱图或原始文件。只写“与目标一致”而无数据时，只记为“用户报告匹配（未附数据）”；填了分子式、积分或 m/z 时，本地会核对数值是否自洽（仍非独立核验）。</p>
+          <div class="table-wrap"><table class="entry-table">
+            <thead><tr><th>表征方法</th><th>与目标是否一致</th><th>观测值（原话）</th><th>积分总数（H）</th><th>实测 m/z</th><th>目标产物分子式</th><th>谱图/附件编号</th><th></th></tr></thead>
+            <tbody id="evidence-rows"></tbody>
+          </table></div>
+          <button type="button" id="add-evidence" class="button secondary">＋ 添加表征证据</button>
+          <p class="hint">积分与 m/z 需要配合分子式才有可核对的意义：填入分子式后，本地按单同位素质量核对 m/z（默认 [M+H]+），并按氢数核对积分总数。没有表征记录就保持空白，不要用名称匹配代替证据。</p>
+          <label>同条件重复次数<input name="repeat_attempts" type="number" min="1" step="1"></label>
+        </fieldset>
+
+        <fieldset><legend>用户目标</legend><label class="check"><input name="has_goal" type="checkbox" aria-describedby="goal-help">设置最低结果目标</label><p class="muted" id="goal-help">目标可选。不设目标时，请取消勾选上方选项，无需只清空数字；勾选后须填写目标值。未设目标仍可复盘，但不判断是否达标。</p><div class="fields two" id="goal-fields"><label>目标（%）<input name="minimum_yield_pct" type="number" min="0" max="100" step="any"></label><label>目标口径<select name="goal_metric" class="assay-options"></select></label></div></fieldset>
+
+        <!-- Legacy compatibility controls: not part of the current user workflow. -->
+        <details id="legacy-local-tools" hidden inert aria-hidden="true"><summary>旧版辅助工具</summary>
+        <p class="hint">此区域仅供本地检查，不随表单提交给Agent。Agent会按自己的可用工具检索文献。</p>
+        <fieldset><legend>文献先例</legend><p class="hint">可载入团队案例库，按完整底物对检索；或上传原有SM-004 SciencePal JSON。结果将明确标注来源方式。</p><div class="source-actions"><button type="button" id="load-library" class="button secondary">载入团队先例库</button><label class="file-button">选择 JSON 文件<input id="source-file" type="file" accept=".json,application/json"></label><button type="button" id="clear-source" class="button text-button">清空先例</button></div><p id="source-name" class="hint"></p><details><summary>查看或粘贴先例 JSON</summary><textarea id="source-text" rows="8" spellcheck="false" aria-label="先例JSON"></textarea></details></fieldset>
+        <button class="button secondary full" id="evaluate" type="submit">仅运行本地规则检查 <span aria-hidden="true">→</span></button>
+        </details>
+      </form>
+      </div>
+    </section>
+    <div class="output-column">
+      <section class="panel" aria-labelledby="agent-title">
+        <span class="step">02 / 评估与改进</span><h2 id="agent-title">实验评估与改进方案</h2>
+        <details class="agent-diagnostics"><summary>连接与任务信息</summary><p id="agent-config" class="hint">正在检查连接配置…</p><p id="agent-task-meta" class="hint"></p><p id="agent-evidence" class="hint"></p></details>
+        <p id="agent-scope" class="hint"></p>
+        <p id="agent-goal" class="goal-line" role="status"></p>
+        <p class="hint">先看本次实验的评估结论与下一步方案；文献依据、实验记录和推断边界可按需展开。建议仍需结合原始证据核查。</p>
+        <button type="button" id="agent-start" class="button primary" disabled>评估并生成下一轮方案</button>
+        <button type="button" id="agent-refresh" class="button secondary" disabled>查看任务状态</button>
+        <button type="button" id="agent-recover" class="button secondary" disabled>读取原任务报告</button>
+        <button type="button" id="agent-download" class="button secondary" disabled>导出 Agent 结果</button>
+        <label class="file-button">打开已导出的结果<input id="agent-import" type="file" accept=".json,application/json"></label>
+        <p id="agent-status" role="status"></p>
+        <p id="agent-display-note" class="hint">回答将按内容分区展示。</p>
+        <div id="agent-cards" class="agent-cards"></div>
+        <details><summary>查看完整原始回答（含可能的草稿内容）</summary><pre id="agent-answer"></pre></details>
+      </section>
+      <section id="legacy-result-panel" class="panel output-panel" aria-labelledby="result-title" hidden inert aria-hidden="true"><div class="section-heading"><div><span class="step">02 / 评估</span><h2 id="result-title">复盘结果</h2></div><span id="result-state" class="tag">等待输入</span></div>
+        <p id="stale" class="notice" hidden>输入已修改。请重新复盘，以下是上一次评估结果。</p>
+        <div id="empty-result" class="empty"><span aria-hidden="true">⌁</span><h3>先整理记录，再判断结果</h3><p>点击“开始复盘”，查看目标比较、证据边界和待补信息。</p></div>
+        <div id="result" hidden>
+          <div id="simulation-banner" class="notice" hidden>模拟案例 · 非团队真实实验数据</div>
+          <div class="goal-card"><span>与用户目标比较</span><h3 id="goal-title"></h3><p id="goal-description"></p></div>
+          <section class="result-section"><h3><i class="dot blue"></i>优先核查行动</h3><p class="hint">规则生成的证据核查顺序，不是失败原因诊断。</p><div id="next-checks"></div></section>
+          <section class="result-section"><h3><i class="dot green"></i>证据与来源</h3><p id="product-evidence"></p><p id="retrieval-summary" class="hint"></p><div id="sources"></div></section>
+          <section class="result-section"><h3><i class="dot amber"></i>推断边界</h3><ul id="boundaries"></ul><p id="policy-note" class="hint"></p></section>
+          <section class="result-section"><h3><i class="dot blue"></i>缺失与追问</h3><ul id="followups"></ul></section>
+          <div class="result-actions"><button id="save" class="button primary" disabled>保存本次复盘</button><button id="download" class="button secondary" disabled>导出 JSON</button></div><p id="saved-info" class="hint" aria-live="polite"></p>
+          <details><summary>查看完整规则输出</summary><pre id="raw-result"></pre></details>
+        </div>
+      </section>
+      <section id="legacy-history-panel" class="panel history-panel" hidden inert aria-hidden="true"><div class="section-heading"><div><span class="step">03 / 记录</span><h2>历史复盘</h2></div><button id="refresh-history" class="button text-button">刷新</button></div><p class="hint">保存在本机，显示最近100条。打开旧记录后可修改并另存为新记录。</p><div id="history" class="history-list"></div></section>
+    </div>
+  </div>
+  <footer>记录格式与反应类型通用；当前固定判定引擎覆盖 Suzuki–Miyaura（芳基卤化物 + 硼酸/硼酸酯），其他反应只做事实复盘与证据核查。模拟数据不代表真实实验；评估与建议应结合原始记录审核。</footer>
+</main>
+</body></html>

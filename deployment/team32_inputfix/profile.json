@@ -1,0 +1,12 @@
+{
+  "profile": "team32",
+  "revision": "1.1.0+cc-inputfix.1",
+  "upstream_commit": "c20f7f610295ee5909569cf926243437ccc7e2b5",
+  "program_sha256": "d95acc315a2ee1f1fa57c0f54b01d72e25692f73236d42a0f2ce005207dfd924",
+  "records_sha256": "d502f8fff5c71d25f09d1be4bb9e56daeabf915e2bb2ed12627479e66923fe9a",
+  "record_count": 32,
+  "numeric_comparison_allowed": false,
+  "placement_allowed": false,
+  "scientific_approval": false,
+  "change_scope": "Allow explicit unknown outcome_type sentinel without deleting known observed value; no gate/tier/placement/data changes"
+}

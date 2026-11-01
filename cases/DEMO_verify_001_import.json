@@ -1,0 +1,134 @@
+{
+  "input": {
+    "experiment": {
+      "schema_version": "chemcritic.experiment.v0.2",
+      "experiment_id": "DEMO-VERIFY-001",
+      "simulated": true,
+      "reaction": {
+        "type": "suzuki_miyaura",
+        "type_label": null,
+        "reactants": [
+          {
+            "name": "4-bromoanisole",
+            "role": "aryl_halide",
+            "equivalents": 1.0,
+            "limiting": true,
+            "role_source": "user_stated"
+          },
+          {
+            "name": "phenylboronic acid",
+            "role": "boronic_acid_or_ester",
+            "equivalents": 1.5,
+            "limiting": false,
+            "role_source": "user_stated"
+          }
+        ],
+        "product": {
+          "name": "4-methoxybiphenyl",
+          "characterization": null
+        },
+        "equivalents_basis": {
+          "reactant_index": 0,
+          "label": "4-bromoanisole"
+        }
+      },
+      "catalyst": {
+        "name": "Pd(OAc)2",
+        "loading_mol_pct": 2,
+        "loading_basis": null,
+        "ligand": {
+          "name": "PPh3",
+          "loading_mol_pct": null
+        }
+      },
+      "additives": [
+        {
+          "name": "K2CO3",
+          "type": "base",
+          "equivalents": 2.0,
+          "loading_mol_pct": null
+        },
+        {
+          "name": "TBAB",
+          "type": "phase_transfer",
+          "equivalents": null,
+          "loading_mol_pct": 5
+        }
+      ],
+      "additives_listed_complete": true,
+      "additive_declarations": {},
+      "conditions": {
+        "solvent_system": {
+          "primary": "THF",
+          "cosolvent": null,
+          "ratio": null,
+          "volume_ml": 5,
+          "water_content": "unknown"
+        },
+        "temperature_C": 70,
+        "time_h": 6,
+        "atmosphere": null,
+        "scale_mmol": null,
+        "pressure_bar": null,
+        "irradiation": null,
+        "addition_mode": null
+      },
+      "results": {
+        "value_pct": 88,
+        "metric": "conversion",
+        "basis": "4-bromoanisole 消耗量（面积归一转化率）",
+        "method": "GC-FID 面积归一（无内标）",
+        "internal_standard": null,
+        "characterization": [
+          {
+            "method": "1H NMR",
+            "supports_target": true,
+            "provenance": "user_report",
+            "raw_spectrum_provided": false
+          }
+        ],
+        "repeat_attempts": 1,
+        "replicates": []
+      },
+      "user_goal": {
+        "minimum_yield_pct": 80,
+        "metric": "isolated"
+      }
+    },
+    "sciencepal_text": ""
+  },
+  "agent": {
+    "id": "demo-verify-001",
+    "state": "completed",
+    "working": false,
+    "answer": "",
+    "run_id": null,
+    "thread_id": null,
+    "agent_id": "430d2a06-4544-46d2-8ae3-b47a08a92252",
+    "source_verified_by_this_run": false,
+    "tool_execution_verified": false,
+    "agent_answer_is_authoritative": false,
+    "engine_profile": "team44",
+    "record_scope": {
+      "in_scope": true,
+      "reaction_type": "suzuki_miyaura",
+      "reaction_label": "Suzuki–Miyaura 偶联",
+      "profile": "suzuki_miyaura",
+      "reasons": []
+    },
+    "input_goal_preview": {
+      "kind": "local_input_rules_not_agent_report",
+      "goal_comparison": {
+        "state": "unavailable",
+        "reason": "assay_mismatch",
+        "gap_pp": null
+      },
+      "observed_value": 88,
+      "target_value": 80,
+      "engine_scope": {
+        "in_scope": true
+      },
+      "scientific_approval": false
+    }
+  }
+}

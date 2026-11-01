@@ -1,0 +1,10 @@
+{
+  "profile": "team44_pinned",
+  "program_sha256": "ac759e24c01ee5c99beaa3d70a6db601d0848c8d69edef6123d3e0efbeceeeca",
+  "upstream_program_sha256": "c0548083f340ce8b2e10f2e03e01e8152667bd29b772bf592504a9ae19688fea",
+  "revision": "1.4.1+cc-placement-scope.1",
+  "source_url": "https://raw.githubusercontent.com/LRJ888-Max/Chemcritic_sciencepal-hackathon/main/skills/chemcritic-comparability/scripts/chemcritic_engine.py",
+  "record_count": 44,
+  "change_scope": "placement/类统计分母显式化：新增 scope、same_pair_count、library_same_class_count、library_total_count、library_class_counts、outcome_type_label、observed 回显；NO_COMPARABLE 等 reason 写明同底物对限制与两套分母；class_summary 增 scope/中文口径并改 comparable→in_equivalence_classes；coverage 标 scope；build_payload 增 scopes。无 gate/tier/records 变化（selftest 28 passed）。",
+  "scientific_approval": false
+}

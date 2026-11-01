@@ -1,0 +1,106 @@
+{
+  "schema_version": "chemcritic.experiment.v0.2",
+  "experiment_id": "ALL-FIELDS",
+  "simulated": true,
+  "reaction": {
+    "type": "suzuki_miyaura",
+    "type_label": "自定义备注",
+    "reactants": [
+      {
+        "name": "bromobenzene",
+        "role": "aryl_halide",
+        "equivalents": 1,
+        "limiting": true,
+        "role_source": "user_stated"
+      },
+      {
+        "name": "phenylboronic acid",
+        "role": "boronic_acid_or_ester",
+        "equivalents": 1.2,
+        "limiting": false,
+        "role_source": "user_stated"
+      }
+    ],
+    "product": {
+      "name": "biphenyl"
+    },
+    "equivalents_basis": {
+      "reactant_index": 0,
+      "label": "bromobenzene"
+    }
+  },
+  "catalyst": {
+    "name": "Pd(PPh3)4",
+    "loading_mol_pct": 1,
+    "loading_basis": "相对溴苯",
+    "ligand": {
+      "name": "TEST-LIGAND",
+      "loading_mol_pct": 2
+    },
+    "classification": {
+      "catalyst_form": null,
+      "ligand_family": null,
+      "support": null,
+      "medium": null,
+      "activation_mode": null
+    }
+  },
+  "additives": [
+    {
+      "name": "K2CO3",
+      "type": "base",
+      "equivalents": 2,
+      "loading_mol_pct": null
+    },
+    {
+      "name": "TEST-SALT",
+      "type": "salt",
+      "equivalents": 0.1,
+      "loading_mol_pct": 10
+    }
+  ],
+  "additives_listed_complete": true,
+  "additive_declarations": {},
+  "conditions": {
+    "solvent_system": {
+      "primary": "乙醇",
+      "cosolvent": "水",
+      "ratio": "4:1",
+      "volume_ml": 5,
+      "water_content": "aqueous"
+    },
+    "temperature_C": -10,
+    "time_h": 4,
+    "atmosphere": "N2",
+    "scale_mmol": 1,
+    "pressure_bar": 2,
+    "irradiation": "TEST-LIGHT",
+    "addition_mode": "TEST-ADDITION"
+  },
+  "results": {
+    "value_pct": 37,
+    "metric": "gc",
+    "basis": "溴苯投料量",
+    "method": "GC-FID",
+    "internal_standard": "TEST-STANDARD",
+    "characterization": [
+      {
+        "method": "1H NMR",
+        "supports_target": true,
+        "provenance": "user_report",
+        "raw_spectrum_provided": false,
+        "observation_text": "δ 7.58 (d, J=8.8 Hz, 2H), 7.47 (d, 2H)",
+        "proton_integral": 12,
+        "mz": 185.0961,
+        "formula": "C13H12O",
+        "spectrum_reference": "NMR-TEST-001"
+      }
+    ],
+    "repeat_attempts": 2,
+    "replicates": []
+  },
+  "user_goal": {
+    "minimum_yield_pct": 60,
+    "metric": "isolated"
+  }
+}

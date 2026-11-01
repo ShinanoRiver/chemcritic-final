@@ -1,0 +1,8 @@
+{
+  "source_name": "角色.docx",
+  "docx_sha256": "d16b63ae4393ad851cafc16b614af63e7524ad2d2bde9ac0cdeaeca850d2ce65",
+  "text_sha256": "d69a5dc659ec7fe3801d096efe8f8018a5373db3ce7e2d60df9aa6d5e802e925",
+  "conversion": "OOXML paragraphs in document order, text preserved; newline between paragraphs",
+  "business_prompt": "user_selected_team_document",
+  "import_date": "2026-10-30"
+}
