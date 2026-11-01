@@ -99,5 +99,13 @@
   "deployment/team44_pinned/profile.json": "ff32b2083d37e60437de3827a3fde13c39881e978f75b4ddc9d7590190d63f05",
   "tests/test_record_fidelity.py": "0e57d85fde18c73a68cd8e8539c62adc2d2e556bc7691439c10c70f40f1e2fec",
   "tools/test_chinese_report.cjs": "93d846db4a5ab2464e747cbd54dceaefb8f664a6a0de5a32d0eced4629fecd60",
-  "队友启动说明.md": "37b1b17d011795e1e0f58f0e3adc19ede150f34f36bb5a8b1c2ccbf67a7a672b"
+  "队友启动说明.md": "37b1b17d011795e1e0f58f0e3adc19ede150f34f36bb5a8b1c2ccbf67a7a672b",
+  "app/chemcritic/cloud_server.py": "f5f6c04df12251ec341f6011a61984e9e0c9b4f6417e4c5f17f65953aa187656",
+  "tests/test_cloud_server.py": "9a0b13531344e3fe4cfd1424264ebec39dbe91aa5c5d0e7002a943dabc037a7d",
+  "tests/test_railway_config.py": "bd6a60a3f12008f7d9e601d35635fc06dab53a4eabef4493bd7e4f4bf94a8a3c",
+  "Dockerfile": "ef7d2c3a388d9222ae93722bea9ccf78d15fde91049e4cfbbfc3477397e7643f",
+  ".dockerignore": "2aba19323a1b1d0250b1ac55ea518e74d1741cfd3cedc4ad6b93d3e07ae3ca60",
+  ".gitignore": "17c543c908637c007cf425a8bf9566f29e4bb8fd9ec2c220749203187dba8cc7",
+  "railway.toml": "9334b92de4792ce68b70ba041adebbed2ea8722d95113aff3ed86573f0bd416e",
+  "Railway免费部署步骤.md": "112e9466bbf77e17b63fa423a452d2f618cf4ec6ec1d5552e6a8fb77e9aae67a"
 }
